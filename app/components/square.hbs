@@ -1,7 +1,10 @@
 {{#if this.isO}}
-  <button type="button" class="square" {{ on "click" this.toggleSize }}>
+  <button type="button" class="square">
     <h1>0</h1>
   </button>
 {{else}}
-  <button type="button" class="square" {{on "click" this.toggleSize}} />
+  <button type="button" class="square" {{on "click" this.toggleO}}>
+    <h2></h2>
+  </button>
 {{/if}}
+
