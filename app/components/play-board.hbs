@@ -1,11 +1,20 @@
-<div class="board">
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
+<div class="score">
+  <h2> User score: {{userScore}} </h2>
+  <h2> Computer score: {{computerScore}} </h2>
+  <h2> Draw: {{drawScore}} </h2>
 </div>
+
+<div class="board">
+  <div class="square" {{action 'markX' 'one'}}>{{one}}</div>
+  <div class="square" {{action 'markX' 'two'}}>{{two}}</div>
+  <div class="square" {{action 'markX' 'three'}}>{{three}}</div>
+
+  <div class="square" {{action 'markX' 'four'}}>{{four}}</div>
+  <div class="square" {{action 'markX' 'five'}}>{{five}}</div>
+  <div class="square" {{action 'markX' 'six'}}>{{six}}</div>
+
+  <div class="square" {{action 'markX' 'seven'}}>{{seven}}</div>
+  <div class="square" {{action 'markX' 'eight'}}>{{eight}}</div>
+  <div class="square" {{action 'markX' 'nine'}}>{{nine}}</div>
+</div>
+

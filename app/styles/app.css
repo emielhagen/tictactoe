@@ -18,3 +18,7 @@
   background-color: #f26b61;
 }
 
+.score {
+  display: flex;
+  justify-content: space-around;
+}
