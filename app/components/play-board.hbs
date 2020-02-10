@@ -1,20 +1,42 @@
-<div class="score">
-  <h2> User score: {{userScore}} </h2>
-  <h2> Computer score: {{computerScore}} </h2>
-  <h2> Draw: {{drawScore}} </h2>
+<div class="banner">
+  <div class="dark-stroke"></div>
+  <div class="light-stroke">
+    <div class="game-title">Tic Tac Toe</div>
+    <div class="score">
+      <h2> User score: {{userScore}} </h2>
+      <h2> Computer score: {{computerScore}} </h2>
+      <h2> Draw: {{drawScore}} </h2>
+    </div>
+  </div>
 </div>
 
 <div class="board">
-  <div class="square" {{action 'markX' 'one'}}>{{one}}</div>
-  <div class="square" {{action 'markX' 'two'}}>{{two}}</div>
-  <div class="square" {{action 'markX' 'three'}}>{{three}}</div>
-
-  <div class="square" {{action 'markX' 'four'}}>{{four}}</div>
-  <div class="square" {{action 'markX' 'five'}}>{{five}}</div>
-  <div class="square" {{action 'markX' 'six'}}>{{six}}</div>
-
-  <div class="square" {{action 'markX' 'seven'}}>{{seven}}</div>
-  <div class="square" {{action 'markX' 'eight'}}>{{eight}}</div>
-  <div class="square" {{action 'markX' 'nine'}}>{{nine}}</div>
+  <div class="square" {{action 'markX' 'one'}}>
+    <h2 class="square-text">{{one}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'two'}}>
+    <h2 class="square-text">{{two}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'three'}}>
+    <h2 class="square-text">{{three}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'four'}}>
+    <h2 class="square-text">{{four}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'five'}}>
+    <h2 class="square-text">{{five}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'six'}}>
+    <h2 class="square-text">{{six}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'seven'}}>
+    <h2 class="square-text">{{seven}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'eight'}}>
+    <h2 class="square-text">{{eight}}</h2>
+  </div>
+  <div class="square" {{action 'markX' 'nine'}}>
+    <h2 class="square-text">{{nine}}</h2>
+  </div>
 </div>
 
