@@ -14,17 +14,17 @@
 
         {{#paper-dialog-content}}
           <p>
-            {{endingMessage}} Play again?
+            {{endingMessage}}
           </p>
         {{/paper-dialog-content}}
 
         {{#paper-dialog-actions class="layout-row"}}
           <span class="flex"></span>
           {{#paper-button onClick=(action "closeDialogWithParent" "cancel")}}
-            No, thank you
+            Reset score
           {{/paper-button}}
           {{#paper-button onClick=(action "closeDialogWithParent" "ok")}}
-            Yes
+            Continue
           {{/paper-button}}
         {{/paper-dialog-actions}}
       </form>

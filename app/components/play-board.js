@@ -94,7 +94,6 @@ export default class PlayBoardComponent extends Component {
       userPlayed.length = 0;
       computerPlayed.length = 0;
       computerOptions.length = 0;
-      // resetScreen(this);
       set(this, 'gameOver', false);
     }
   }
