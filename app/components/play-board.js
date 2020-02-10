@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, set, get } from '@ember/object';
 
-
 export default class PlayBoardComponent extends Component {
   @tracked userScore = 0;
   @tracked computerScore = 0;
@@ -44,7 +43,6 @@ export default class PlayBoardComponent extends Component {
     Object.keys(layout).forEach(number => layout[number] === undefined ? computerOptions.push(number) : null);
     Object.keys(layout).forEach(number => layout[number] === 'X' ? userPlayed.push(number) : null);
 
-
     if(computerOptions.length === 0) {
       if(checkWon(winCom, userPlayed)){
         set(this, 'userWon', true);
@@ -54,21 +52,22 @@ export default class PlayBoardComponent extends Component {
     } else if(computerOptions.length === 9-(userPlayed.length*2-1)) {
       let compChose = computerOptions[Math.floor(Math.random()*computerOptions.length)];
       set(this, compChose, 'O');
+      layout[compChose] = 'O';
       Object.keys(layout).forEach(number => layout[number] === 'O' ? computerPlayed.push(number) : null);
     }
 
     if(get(this, 'draw')){
-      alert('Draw!');
+      // alert('Draw!');
       this.drawScore = this.drawScore += 1;
       set(this, 'draw', false);
-      set(this, 'gameOver', true)
+      set(this, 'gameOver', true);
       resetScreen(this);
     } else if(checkWon(winCom, userPlayed)) {
       alert('Yes, you won. Well done!');
       this.userScore = this.userScore += 1;
-      set(this, 'gameOver', true)
+      set(this, 'gameOver', true);
     } else if(checkWon(winCom, computerPlayed)) {
-      alert('Oops, you lost!');
+      // alert('Oops, you lost!');
       this.computerScore = this.computerScore += 1;
       set(this, 'gameOver', true)
     }
@@ -93,19 +92,19 @@ function checkWon(winCombi, playedNumbers) {
       }
     }
     if(count === 3) {
-      return true;
+      return true
     }
   }
 }
 
-function resetScreen(board) {
-  set(board, 'one', undefined);
-  set(board, 'two', undefined);
-  set(board, 'three', undefined);
-  set(board, 'four', undefined);
-  set(board, 'five', undefined);
-  set(board, 'six', undefined);
-  set(board, 'seven', undefined);
-  set(board, 'eight', undefined);
-  set(board, 'nine', undefined);
+function resetScreen(boardComponent) {
+  set(boardComponent, 'one', undefined);
+  set(boardComponent, 'two', undefined);
+  set(boardComponent, 'three', undefined);
+  set(boardComponent, 'four', undefined);
+  set(boardComponent, 'five', undefined);
+  set(boardComponent, 'six', undefined);
+  set(boardComponent, 'seven', undefined);
+  set(boardComponent, 'eight', undefined);
+  set(boardComponent, 'nine', undefined);
 }
