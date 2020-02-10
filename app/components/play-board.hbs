@@ -1,3 +1,37 @@
+<div id="paper-dialog-tic">
+  {{#if showDialogWithParent}}
+    {{#paper-dialog class="flex-50" onClose=(action "closeDialogWithParent" "cancel") parent="#paper-dialog-tic" origin=dialogOrigin clickOutsideToClose=true}}
+      <form>
+        {{#paper-toolbar}}
+          {{#paper-toolbar-tools}}
+            <h2>{{winnerTitle}}</h2>
+            <span class="flex"></span>
+            {{#paper-button iconButton=true onClick=(action "closeDialogWithParent" "cancel")}}
+              {{paper-icon icon="close"}}
+            {{/paper-button}}
+          {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+
+        {{#paper-dialog-content}}
+          <p>
+            {{endingMessage}} Play again?
+          </p>
+        {{/paper-dialog-content}}
+
+        {{#paper-dialog-actions class="layout-row"}}
+          <span class="flex"></span>
+          {{#paper-button onClick=(action "closeDialogWithParent" "cancel")}}
+            No, thank you
+          {{/paper-button}}
+          {{#paper-button onClick=(action "closeDialogWithParent" "ok")}}
+            Yes
+          {{/paper-button}}
+        {{/paper-dialog-actions}}
+      </form>
+    {{/paper-dialog}}
+  {{/if}}
+</div>
+
 <div class="banner">
   <div class="dark-stroke"></div>
   <div class="light-stroke">

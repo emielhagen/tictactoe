@@ -8,6 +8,19 @@ export default class PlayBoardComponent extends Component {
   @tracked drawScore = 0;
   @tracked draw = false;
   @tracked gameOver = false;
+  @tracked showDialogWithParent = false;
+  @tracked winnerTitle = '';
+  @tracked endingMessage = '';
+
+  @action closeDialogWithParent(message){
+    if(message === 'ok') {
+      set(this, 'showDialogWithParent', false);
+      resetScreen(this);
+    } else {
+      set(this, 'showDialogWithParent', false);
+      location.reload();
+    }
+  }
 
   @action markX(number) {
     let userPlayed = [];
@@ -57,26 +70,31 @@ export default class PlayBoardComponent extends Component {
     }
 
     if(get(this, 'draw')){
-      // alert('Draw!');
       this.drawScore = this.drawScore += 1;
       set(this, 'draw', false);
       set(this, 'gameOver', true);
-      resetScreen(this);
+      set(this, 'winnerTitle', 'Draw');
+      set(this, 'endingMessage', 'It is a draw!');
+      set(this, 'showDialogWithParent', true);
     } else if(checkWon(winCom, userPlayed)) {
-      alert('Yes, you won. Well done!');
       this.userScore = this.userScore += 1;
       set(this, 'gameOver', true);
+      set(this, 'winnerTitle', 'Winner: Player');
+      set(this, 'endingMessage', 'Congratulations, you won!');
+      set(this, 'showDialogWithParent', true);
     } else if(checkWon(winCom, computerPlayed)) {
-      // alert('Oops, you lost!');
       this.computerScore = this.computerScore += 1;
       set(this, 'gameOver', true)
+      set(this, 'winnerTitle', 'Winner: Computer');
+      set(this, 'endingMessage', 'Oh no, you lost!');
+      set(this, 'showDialogWithParent', true);
     }
 
     if(get(this, 'gameOver')){
       userPlayed.length = 0;
       computerPlayed.length = 0;
       computerOptions.length = 0;
-      resetScreen(this);
+      // resetScreen(this);
       set(this, 'gameOver', false);
     }
   }
