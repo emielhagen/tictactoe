@@ -8,6 +8,7 @@ export default class PlayBoardComponent extends Component {
   @tracked computerScore = 0;
   @tracked drawScore = 0;
   @tracked draw = false;
+  @tracked gameOver = false;
 
   @action markX(number) {
     let userPlayed = [];
@@ -27,7 +28,7 @@ export default class PlayBoardComponent extends Component {
 
     if(get(this, number) === undefined ){
       set(this, number, 'X');
-    };
+    }
 
     let layout = { one: get(this, 'one'),
                    two: get(this, 'two'),
@@ -41,42 +42,47 @@ export default class PlayBoardComponent extends Component {
                  };
 
     Object.keys(layout).forEach(number => layout[number] === undefined ? computerOptions.push(number) : null);
-    if(computerOptions.length === 0) {
-      set(this, 'draw', true)
-    } else {
-      set(this, computerOptions[Math.floor(Math.random()*computerOptions.length)], 'O');
-    }
-    Object.keys(layout).forEach(number => layout[number] === 'O' ? computerPlayed.push(number) : null);
     Object.keys(layout).forEach(number => layout[number] === 'X' ? userPlayed.push(number) : null);
 
+
+    if(computerOptions.length === 0) {
+      if(checkWon(winCom, userPlayed)){
+        set(this, 'userWon', true);
+      } else {
+        set(this, 'draw', true);
+      }
+    } else if(computerOptions.length === 9-(userPlayed.length*2-1)) {
+      let compChose = computerOptions[Math.floor(Math.random()*computerOptions.length)];
+      set(this, compChose, 'O');
+      Object.keys(layout).forEach(number => layout[number] === 'O' ? computerPlayed.push(number) : null);
+    }
+
     if(get(this, 'draw')){
-      alert('DRAW');
+      alert('Draw!');
       this.drawScore = this.drawScore += 1;
       set(this, 'draw', false);
-      userPlayed.length = 0;
-      computerPlayed.length = 0;
-      computerOptions.length = 0;
+      set(this, 'gameOver', true)
       resetScreen(this);
     } else if(checkWon(winCom, userPlayed)) {
-      alert('yes, you got it');
+      alert('Yes, you won. Well done!');
       this.userScore = this.userScore += 1;
-      userPlayed.length = 0;
-      computerPlayed.length = 0;
-      computerOptions.length = 0;
-      resetScreen(this);
+      set(this, 'gameOver', true)
     } else if(checkWon(winCom, computerPlayed)) {
-      debugger;
       alert('Oops, you lost!');
       this.computerScore = this.computerScore += 1;
+      set(this, 'gameOver', true)
+    }
+
+    if(get(this, 'gameOver')){
       userPlayed.length = 0;
       computerPlayed.length = 0;
       computerOptions.length = 0;
       resetScreen(this);
+      set(this, 'gameOver', false);
     }
   }
 
 }
-
 
 function checkWon(winCombi, playedNumbers) {
   for(let a=0; a<winCombi.length; a++){
