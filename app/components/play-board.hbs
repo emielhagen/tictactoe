@@ -1,75 +1,32 @@
-<div id="paper-dialog-tic">
-  {{#if showDialogWithParent}}
-    {{#paper-dialog class="flex-50" onClose=(action "closeDialogWithParent" "cancel") parent="#paper-dialog-tic" origin=dialogOrigin clickOutsideToClose=true}}
-      <form>
-        {{#paper-toolbar}}
-          {{#paper-toolbar-tools}}
-            <h2>{{winnerTitle}}</h2>
-            <span class="flex"></span>
-            {{#paper-button iconButton=true onClick=(action "closeDialogWithParent" "cancel")}}
-              {{paper-icon icon="close"}}
-            {{/paper-button}}
-          {{/paper-toolbar-tools}}
-        {{/paper-toolbar}}
-
-        {{#paper-dialog-content}}
-          <p>
-            {{endingMessage}}
-          </p>
-        {{/paper-dialog-content}}
-
-        {{#paper-dialog-actions class="layout-row"}}
-          <span class="flex"></span>
-          {{#paper-button onClick=(action "closeDialogWithParent" "cancel")}}
-            Reset score
-          {{/paper-button}}
-          {{#paper-button onClick=(action "closeDialogWithParent" "ok")}}
-            Continue
-          {{/paper-button}}
-        {{/paper-dialog-actions}}
-      </form>
-    {{/paper-dialog}}
-  {{/if}}
-</div>
-
-<div class="banner">
-  <div class="dark-stroke"></div>
-  <div class="light-stroke">
-    <div class="game-title">Tic Tac Toe</div>
-    <div class="score">
-      <h2> User score: {{userScore}} </h2>
-      <h2> A.I. score: {{computerScore}} </h2>
-      <h2> Draw score: {{drawScore}} </h2>
-    </div>
-  </div>
-</div>
+<PaperDialogModal @userwon={{this.userWon}} @computerwon={{this.computerWon}} @showDialogWithParent={{this.dialogModal}} @resetScreen={{this.resetScreen}} />
+<Banner @userscore={{this.userScore}} @computerscore={{this.computerScore}} @drawscore={{this.drawScore}}/>
 
 <div class="board">
-  <div class="square" {{action 'markX' 'one'}}>
+  <div class="square" {{action 'userSelect' 'one'}}>
     <h2 class="square-text">{{one}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'two'}}>
+  <div class="square" {{action 'userSelect' 'two'}}>
     <h2 class="square-text">{{two}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'three'}}>
+  <div class="square" {{action 'userSelect' 'three'}}>
     <h2 class="square-text">{{three}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'four'}}>
+  <div class="square" {{action 'userSelect' 'four'}}>
     <h2 class="square-text">{{four}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'five'}}>
+  <div class="square" {{action 'userSelect' 'five'}}>
     <h2 class="square-text">{{five}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'six'}}>
+  <div class="square" {{action 'userSelect' 'six'}}>
     <h2 class="square-text">{{six}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'seven'}}>
+  <div class="square" {{action 'userSelect' 'seven'}}>
     <h2 class="square-text">{{seven}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'eight'}}>
+  <div class="square" {{action 'userSelect' 'eight'}}>
     <h2 class="square-text">{{eight}}</h2>
   </div>
-  <div class="square" {{action 'markX' 'nine'}}>
+  <div class="square" {{action 'userSelect' 'nine'}}>
     <h2 class="square-text">{{nine}}</h2>
   </div>
 </div>

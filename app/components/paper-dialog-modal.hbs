@@ -1,0 +1,37 @@
+<div id="paper-dialog-tic">
+  {{#if @showDialogWithParent}}
+    {{#paper-dialog class="flex-50" onClose=(action "closeDialogWithParent" "cancel") parent="#paper-dialog-tic" origin=dialogOrigin clickOutsideToClose=true}}
+      <form>
+        {{#paper-toolbar}}
+          {{#paper-toolbar-tools}}
+            <h2>Game ended</h2>
+            <span class="flex"></span>
+            {{#paper-button iconButton=true onClick=(action "closeDialogWithParent" "cancel")}}
+              {{paper-icon icon="close"}}
+            {{/paper-button}}
+          {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+
+        {{#paper-dialog-content}}
+          {{#if @userwon}}
+            <p>Congratulations, you won!</p>
+          {{else if @computerwon}}
+            <p>Oh No, you lost!</p>
+          {{else}}
+            <p>It's a draw!</p>
+          {{/if}}
+        {{/paper-dialog-content}}
+
+        {{#paper-dialog-actions class="layout-row"}}
+          <span class="flex"></span>
+          {{#paper-button onClick=(action "closeDialogWithParent" "cancel")}}
+            Reset score
+          {{/paper-button}}
+          {{#paper-button onClick=(action "closeDialogWithParent" "ok")}}
+            Continue
+          {{/paper-button}}
+        {{/paper-dialog-actions}}
+      </form>
+    {{/paper-dialog}}
+  {{/if}}
+</div>

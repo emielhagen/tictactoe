@@ -1,111 +1,76 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action, set, get } from '@ember/object';
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import { action, get, set } from '@ember/object';
 
 export default class PlayBoardComponent extends Component {
-  @tracked userScore = 0;
-  @tracked computerScore = 0;
-  @tracked drawScore = 0;
-  @tracked draw = false;
-  @tracked gameOver = false;
-  @tracked showDialogWithParent = false;
-  @tracked winnerTitle = '';
-  @tracked endingMessage = '';
+  @tracked dialogModal = false
+  @tracked gameOver = false
+  @tracked userWon = false
+  @tracked computerWon = false
+  @tracked userScore = 0
+  @tracked computerScore = 0
+  @tracked drawScore = 0
+  @tracked grid = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 
-  @action closeDialogWithParent(message){
-    if(message === 'ok') {
-      set(this, 'showDialogWithParent', false);
-      resetScreen(this);
-    } else {
-      set(this, 'showDialogWithParent', false);
-      location.reload();
-    }
-  }
-
-  @action markX(number) {
-    let userPlayed = [];
-    let computerPlayed = [];
-    let computerOptions = [];
-
-    let winCom = [
-      ['one', 'four', 'seven'],
-      ['two', 'five', 'eight'],
-      ['three', 'six', 'nine'],
-      ['one', 'two', 'three'],
-      ['four', 'five', 'six'],
-      ['seven', 'eight', 'nine'],
-      ['one', 'five', 'nine'],
-      ['three', 'five', 'seven']
-    ];
-
-    if(get(this, number) === undefined ){
-      set(this, number, 'X');
-    }
-
-    let layout = { one: get(this, 'one'),
-                   two: get(this, 'two'),
-                   three: get(this, 'three'),
-                   four: get(this, 'four'),
-                   five: get(this, 'five'),
-                   six: get(this, 'six'),
-                   seven: get(this, 'seven'),
-                   eight: get(this, 'eight'),
-                   nine: get(this, 'nine')
-                 };
-
-    Object.keys(layout).forEach(number => layout[number] === undefined ? computerOptions.push(number) : null);
-    Object.keys(layout).forEach(number => layout[number] === 'X' ? userPlayed.push(number) : null);
-
-    if(computerOptions.length === 0) {
-      if(checkWon(winCom, userPlayed)){
-        set(this, 'userWon', true);
+  @action userSelect(number) {
+    let userPlayed = []
+    if(this[number] === undefined ){
+      set(this, number, 'X')
+      this.grid.forEach(number => this[number] === 'X' ? userPlayed.push(number) : null)
+      if(checkWinner(this, userPlayed)) {
+        this.gameOver = true
+        this.userWon = true
+        this.userScore += 1
       } else {
-        set(this, 'draw', true);
+        computerSelect(this, this.grid);
       }
-    } else if(computerOptions.length === 9-(userPlayed.length*2-1)) {
-      let compChose = computerOptions[Math.floor(Math.random()*computerOptions.length)];
-      set(this, compChose, 'O');
-      layout[compChose] = 'O';
-      Object.keys(layout).forEach(number => layout[number] === 'O' ? computerPlayed.push(number) : null);
     }
-
-    if(get(this, 'draw')){
-      this.drawScore = this.drawScore += 1;
-      set(this, 'draw', false);
-      set(this, 'gameOver', true);
-      set(this, 'winnerTitle', 'Draw');
-      set(this, 'endingMessage', 'It is a draw!');
-      set(this, 'showDialogWithParent', true);
-    } else if(checkWon(winCom, userPlayed)) {
-      this.userScore = this.userScore += 1;
-      set(this, 'gameOver', true);
-      set(this, 'winnerTitle', 'Winner: Player');
-      set(this, 'endingMessage', 'Congratulations, you won!');
-      set(this, 'showDialogWithParent', true);
-    } else if(checkWon(winCom, computerPlayed)) {
-      this.computerScore = this.computerScore += 1;
-      set(this, 'gameOver', true)
-      set(this, 'winnerTitle', 'Winner: Computer');
-      set(this, 'endingMessage', 'Oh no, you lost!');
-      set(this, 'showDialogWithParent', true);
-    }
-
-    if(get(this, 'gameOver')){
-      userPlayed.length = 0;
-      computerPlayed.length = 0;
-      computerOptions.length = 0;
-      set(this, 'gameOver', false);
+    if(this.gameOver) {
+      this.dialogModal = true
     }
   }
 
+  @action resetScreen() {
+    this.userWon = false
+    this.computerWon = false
+    this.dialogModal = false
+    this.gameOver = false
+    this.grid.forEach(element => set(this, element, undefined))
+  }
 }
 
-function checkWon(winCombi, playedNumbers) {
+function computerSelect(gameComponent, grid) {
+  let computerPlayed = []
+  let options = []
+  grid.forEach(function(e){
+    if(gameComponent[e] === undefined){
+      options.push(e);
+    }
+  })
+  if(options.length === 0) {
+    gameComponent.gameOver = true
+    gameComponent.drawScore += 1
+  } else {
+    const randomElement = options[Math.floor(Math.random() * options.length)];
+    set(gameComponent, randomElement, 'O')
+    grid.forEach(number => gameComponent[number] === 'O' ? computerPlayed.push(number) : null)
+    if(checkWinner(gameComponent, computerPlayed)){
+      gameComponent.gameOver = true
+      gameComponent.computerWon = true
+      gameComponent.computerScore += 1
+    }
+  }
+}
+
+function checkWinner(gameComponent, playedNumbers) {
+  let winCombi = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+  let inDices = indicesForPlayedNumbers(playedNumbers)
+
   for(let a=0; a<winCombi.length; a++){
     let count = 0;
-    for(let b=0; b<playedNumbers.length; b++){
-      if(winCombi[a].includes(playedNumbers[b])){
-        count += 1;
+    for(let b=0; b<inDices.length; b++){
+      if(winCombi[a].includes(inDices[b])){
+        count += 1
       }
     }
     if(count === 3) {
@@ -114,14 +79,11 @@ function checkWon(winCombi, playedNumbers) {
   }
 }
 
-function resetScreen(boardComponent) {
-  set(boardComponent, 'one', undefined);
-  set(boardComponent, 'two', undefined);
-  set(boardComponent, 'three', undefined);
-  set(boardComponent, 'four', undefined);
-  set(boardComponent, 'five', undefined);
-  set(boardComponent, 'six', undefined);
-  set(boardComponent, 'seven', undefined);
-  set(boardComponent, 'eight', undefined);
-  set(boardComponent, 'nine', undefined);
+function indicesForPlayedNumbers (playedNumbers){
+  let indices = []
+  let grid = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+  playedNumbers.map(function(number) {
+    indices.push(grid.indexOf(number))
+  })
+  return indices
 }
