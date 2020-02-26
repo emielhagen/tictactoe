@@ -1,11 +1,33 @@
+<PaperDialogModal @userwon={{this.userWon}} @computerwon={{this.computerWon}} @showDialogWithParent={{this.dialogModal}} @resetScreen={{this.resetScreen}} />
+<Banner @userscore={{this.userScore}} @computerscore={{this.computerScore}} @drawscore={{this.drawScore}}/>
+
 <div class="board">
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
-  <Square />
+  <div class="square" {{action 'userSelect' 'one'}}>
+    <h2 class="square-text">{{one}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'two'}}>
+    <h2 class="square-text">{{two}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'three'}}>
+    <h2 class="square-text">{{three}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'four'}}>
+    <h2 class="square-text">{{four}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'five'}}>
+    <h2 class="square-text">{{five}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'six'}}>
+    <h2 class="square-text">{{six}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'seven'}}>
+    <h2 class="square-text">{{seven}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'eight'}}>
+    <h2 class="square-text">{{eight}}</h2>
+  </div>
+  <div class="square" {{action 'userSelect' 'nine'}}>
+    <h2 class="square-text">{{nine}}</h2>
+  </div>
 </div>
+

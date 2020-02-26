@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import 'ember-paper';
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #E5E5E5;
+}
+
+.game-title {
+  padding-top: 25px;
+  text-align: center;
+  font-size: 35px;
+  font-weight: 700;
+  text-shadow: 1px 1px black;
+}
+
+.board {
+  padding: 0% 25%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+}
+
+.square {
+  margin: 1px;
+  height: 200px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score {
+  display: flex;
+  justify-content: space-around;
+}
+
+.banner {
+  color: white;
+  padding: 0% 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dark-stroke {
+  height: 25px;
+  background-color: #3700b3;
+}
+
+.light-stroke {
+  background-color: #6200EE;
+}
+
+.md-toolbar-tools {
+  background-color: #6200EE;
+}

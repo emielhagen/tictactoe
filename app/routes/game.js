@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import Ember from 'ember';
 
-export default class GameRoute extends Route {
-}
+export default Ember.Route.extend({
+})
